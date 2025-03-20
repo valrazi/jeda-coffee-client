@@ -17,19 +17,18 @@ export async function GET(req) {
         }
         const {user} = session
         const {name} = user
-        const tenant = await Tenant.findOne({
+        let tenant = await Tenant.findOne({
             where: {
                 username: name
             }
         })
-        if(!tenant) return NextResponse.json(
-            {
-                error: 'Tenant not found'
-            },
-            {
-                status: 500
-            }
-        )
+        if(!tenant) {
+            tenant = await Tenant.findOne({
+                where: {
+                    username : 'Unifiber'
+                }
+            })
+        }
         const {prefix} = tenant
         const date = dayjs().format('YYYYMMDD')
         const totalTicket = await countTickets()
