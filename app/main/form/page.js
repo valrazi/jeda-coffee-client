@@ -187,7 +187,7 @@ export default function FormPage() {
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: `Ticket with ID ${data.data.data.newTicket.id} has been created`
+                text: `Ticket with ID ${data.data.data.newTicket.ticket_id} has been created`
             })
             .then(() => {
                 window.location.reload()
