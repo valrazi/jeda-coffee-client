@@ -43,11 +43,11 @@ export async function POST(req) {
             detail: description,
             department: 'ONM',
             amt_ticket_id: ticketId,
-            created_by: session.user.name,
+            created_by: session.user.email,
             created_at: dayjs().toDate(),
             category: 'Service Request',
             severity: 'Major',
-            partner: session.user.name
+            partner: 'Unifiber'
         })
         return NextResponse.json({
             data: {
