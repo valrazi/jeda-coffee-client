@@ -27,7 +27,7 @@ export default function SignIn() {
     return (
         <div className="min-h-screen min-w-screen  bg-white flex flex-col items-center p-4">
             <img src="https://www.unifiber.id/assets/logos/logo-color.svg" className="w-44" />
-            <h1 className="text-orange-500 font-bold text-[2rem] my-2">PM REPORT</h1>
+            <h1 className="text-orange-500 font-bold text-[2rem] my-2">LIVE REPORT</h1>
 
             <Form 
             layout="vertical" 

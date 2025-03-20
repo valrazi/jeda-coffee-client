@@ -26,8 +26,7 @@ export default function MainLayout({ children }) {
         })
         .then(async (res) => {
             if(res.isConfirmed) {
-               await signOut()
-               router.push('/auth/sign-in')
+               await signOut({callbackUrl: '/', redirect: true})
             }
         })
     }

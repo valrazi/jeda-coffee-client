@@ -37,16 +37,18 @@ export async function POST(req) {
 
         const body = await req.json()
         const {subject, description} = body
-
         const newTicket = await Ticket.create({
-            customer_id: 'NON_CUSTOMER',
+            customer_id: 'Non_Customer',
             ticket_id: ticketId,
             subject,
             detail: description,
             department: 'ONM',
             amt_ticket_id: ticketId,
-            created_by: session.user.email,
-            created_at: dayjs().toDate()
+            created_by: session.user.name,
+            created_at: dayjs().toDate(),
+            category: 'Service Request',
+            severity: 'Major',
+            partner: session.user.name
         })
         return NextResponse.json({
             data: {

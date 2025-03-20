@@ -46,6 +46,9 @@ const Ticket = sequelize.define('tickets', {
     vendor: {
         type: DataTypes.STRING,
     },
+    severity: {
+        type: DataTypes.STRING,
+    },
     city: {
         type: DataTypes.STRING,
     },
@@ -74,6 +77,9 @@ const Ticket = sequelize.define('tickets', {
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     },
+    created_by: {
+        type: DataTypes.STRING,
+    }
 }, {
 })
 

@@ -7,9 +7,11 @@ import dynamic from "next/dynamic";
 import { CameraOutlined, UploadOutlined, CheckCircleOutlined, XOutlined, ReloadOutlined } from "@ant-design/icons";
 import Webcam from "react-webcam";
 import { useRouter } from "next/navigation";
-
 const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
+const videoConstraints = {
+    facingMode: FACING_MODE_USER
+  };
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import 'react-quill-new/dist/quill.snow.css';
@@ -282,8 +284,12 @@ export default function FormPage() {
                     />
                 </Form.Item>
 
-                <Form.Item label="Description" name="description">
-                    <ReactQuill theme="snow" value={description} onChange={setDescription} modules={modules} />
+                <Form.Item label="Description" name="description" style={{
+                    height:'300px'
+                }}>
+                    <ReactQuill style={{
+                        height: '230px'
+                    }} theme="snow" value={description} onChange={setDescription} modules={modules} />
                 </Form.Item>
 
                 <Form.Item label="Capture Image">
@@ -294,6 +300,10 @@ export default function FormPage() {
                                 ref={webcamRef}
                                 screenshotFormat="image/jpeg"
                                 width="100%"
+                                videoConstraints={{
+                                    ...videoConstraints,
+                                    facingMode
+                                  }}
                             />
                             <Button type="primary" onClick={captureImage} className="mt-2 mr-4">
                                 Take Picture
