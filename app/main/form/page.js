@@ -183,11 +183,11 @@ export default function FormPage() {
         }
 
         try {
-            await axios.post('/api/ticket', payload)
+            const data = await axios.post('/api/ticket', payload)
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: `Ticket with ID ${ticketId} has been created`
+                text: `Ticket with ID ${data.data.data.newTicket.id} has been created`
             })
             .then(() => {
                 window.location.reload()

@@ -17,7 +17,7 @@ export async function POST(req) {
         }
         const {user} = session
         const {name} = user
-        const tenant = await Tenant.findOne({
+        let tenant = await Tenant.findOne({
             where: {
                 username: name
             }
