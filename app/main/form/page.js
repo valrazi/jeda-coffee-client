@@ -169,12 +169,12 @@ export default function FormPage() {
             );
             base64Images.forEach((f) => {
                 console.log(f);
-                newDescription += `\n<br>${f}`
+                newDescription += `\n<br><img src='${f}'/>`
             })
         }
         if (listCapturedImage.length) {
             listCapturedImage.forEach((f) => {
-                newDescription += `\n<br>${f}`
+                newDescription += `\n<br><img src='${f}'/>`
             })
         }
         const payload = {
