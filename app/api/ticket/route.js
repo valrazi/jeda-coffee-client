@@ -22,14 +22,13 @@ export async function POST(req) {
                 username: name
             }
         })
-        if(!tenant) return NextResponse.json(
-            {
-                error: 'Tenant not found'
-            },
-            {
-                status: 500
-            }
-        )
+        if(!tenant) {
+            tenant = await Tenant.findOne({
+                where: {
+                    username : 'Unifiber'
+                }
+            })
+        }
         const {prefix} = tenant
         const date = dayjs().format('YYYYMMDD')
         const totalTicket = await countTickets()
