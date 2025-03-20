@@ -34,7 +34,7 @@ export default function MainLayout({ children }) {
         <div className="w-full ">
             <div className="flex justify-between items-center py-2 px-4 mb-2 border-b border-gray-200">
                 <img src="https://www.unifiber.id/assets/logos/logo-color.svg" className="w-24" />
-                <Button onClick={signoutConfirmation}><FontAwesomeIcon icon={faRightFromBracket} /></Button>
+                <Button onClick={signoutConfirmation}>Logout</Button>
             </div>
             <h1 className="text-orange-500 font-bold text-[1.5rem] mb-2 text-center">{titleName.toUpperCase()}</h1>
             <div className="flex w-full justify-center items-center">
