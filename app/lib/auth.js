@@ -1,7 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from '../../models/user'
 import bcrypt from 'bcryptjs'
-
+import crypto from 'crypto'
 export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     session: { strategy: "jwt" },
@@ -20,7 +20,14 @@ export const authOptions = {
           if (!user) throw new Error("No user found");
   
           const isValid = bcrypt.compareSync(credentials.password, user.password);
-          if (!isValid) throw new Error("Invalid credentials");
+          
+          if (!isValid) {
+            const isValidMd5 = crypto.createHash('md5').update(credentials.password).digest('hex')
+            console.log({isValidMd5: isValidMd5 == user.password});
+            if(isValidMd5 != user.password) {
+              throw new Error("Invalid credentials");
+            }
+          } 
   
           return { id: user.id, name: user.name, email: user.email };
         }
