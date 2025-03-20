@@ -61,6 +61,10 @@ const Ticket = sequelize.define('tickets', {
     billing_ioh: {
         type: DataTypes.STRING(50),
     },
+    argo_start: {
+        type: DataTypes.DATE
+    },
+
     created_at: {
         type: DataTypes.DATE,
         allowNull: false

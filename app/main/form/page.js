@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { CameraOutlined, UploadOutlined, CheckCircleOutlined, XOutlined, ReloadOutlined } from "@ant-design/icons";
 import Webcam from "react-webcam";
 import { useRouter } from "next/navigation";
+const MapComponent = dynamic(() => import("./components/Map"), { ssr: false });
 const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
 const videoConstraints = {
@@ -30,7 +31,7 @@ export default function FormPage() {
 
     const [subjectList, setSubjectList] = useState([])
     const [regionList, setRegionList] = useState([])
-    const [location, setLocation] = useState({ lat: "", lng: "" });
+    const [location, setLocation] = useState({ lat: 0, lng: 0 });
     const [showAllowButton, setShowAllowButton] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [ticketId, setTicketId] = useState("")
@@ -162,6 +163,18 @@ export default function FormPage() {
             message.error('Access Location Permission Must Be Permitted!')
             return
         }
+        if(!values.description || values.description == '<p><br></p>') {
+            message.error('Please input the description')
+            return
+        }
+        if(!listCapturedImage.length) {
+            message.error("Please attach atleast 1 captured image")
+            return
+        }
+        if(capturedImage) {
+            message.error("Image not yet confirmed / undo!")
+            return
+        }
         let newDescription = `${values.region}\n<br>\n<br>Position ${location.lat},${location.lng}\n<br>${values.description}`
         if (fileList.length) {
             const base64Images = await Promise.all(
@@ -264,6 +277,12 @@ export default function FormPage() {
                             Allow Location Access
                         </Button>
                     )}
+
+                    {(location.lat && location.lng) && (
+                        <div className="my-2">
+                            <MapComponent lat={location.lat} lng={location.lng} changeLocation={setLocation} />
+                        </div>
+                    )}
                 </Form.Item>
 
                 <Form.Item
@@ -284,7 +303,8 @@ export default function FormPage() {
                     />
                 </Form.Item>
 
-                <Form.Item label="Description" name="description" style={{
+                <Form.Item 
+                label="Description" name="description" style={{
                     height:'300px'
                 }}>
                     <ReactQuill style={{
@@ -322,12 +342,16 @@ export default function FormPage() {
                         <div>
                             <p>Preview:</p>
                             <img src={capturedImage} alt="Captured" style={{ width: "100%", marginTop: "10px" }} />
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 mt-2">
                                 <Button onClick={() => {
                                     setListCapturedImage([...listCapturedImage, capturedImage])
                                     setCapturedImage(undefined)
-                                }} icon={<CheckCircleOutlined />} type="primary" variant="solid" color="green" />
-                                <Button onClick={() => setCapturedImage(undefined)} icon={<XOutlined />} type="primary" variant="solid" color="red" />
+                                }} icon={<CheckCircleOutlined />} type="primary" variant="solid" color="green">
+                                    Confirm
+                                </Button>
+                                <Button onClick={() => setCapturedImage(undefined)} icon={<XOutlined />} type="primary" variant="solid" color="red">
+                                Undo
+                                </Button>
                             </div>
                         </div>
                     )}
@@ -343,11 +367,11 @@ export default function FormPage() {
 
                 </Form.Item>
 
-                <Form.Item label="Upload Image">
+                {/* <Form.Item label="Upload Image">
                     <Upload onChange={handleUploadChange} beforeUpload={() => false} listType="picture-card">
                         <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item label={null}>
                     <Button type="primary" htmlType="submit">

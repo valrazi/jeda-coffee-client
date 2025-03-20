@@ -5,6 +5,18 @@ import { getServerSession } from "next-auth/next"
 import {authOptions} from '@/lib/auth'
 import dayjs from "dayjs";
 import { countTickets } from "../ticket-id/route";
+
+function setArgostart(pdatetime) {
+    let todayEightAM = pdatetime.hour(8).minute(0).second(0).millisecond(0);
+    if (pdatetime.hour() >= 15) {
+      return todayEightAM.add(1, 'day');
+    } else if (pdatetime.hour() < 8) {
+      return todayEightAM;
+    } else {
+      return pdatetime;
+    }
+  }
+
 export async function POST(req) {
     try {
         const session = await getServerSession(authOptions)
@@ -47,7 +59,8 @@ export async function POST(req) {
             created_at: dayjs().toDate(),
             category: 'Service Request',
             severity: 'Major',
-            partner: 'Unifiber'
+            partner: 'Unifiber',
+            argo_start: setArgostart(dayjs())
         })
         return NextResponse.json({
             data: {
