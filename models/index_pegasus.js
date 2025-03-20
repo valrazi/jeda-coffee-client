@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize({
   database: process.env.PEGASUS_DB,
-  host: '127.0.0.1',
+  host: process.env.PEGASUS_HOST,
   username: process.env.PEGASUS_USERNAME,
   password: process.env.PEGASUS_PASSWORD,
   dialect: 'mysql',
