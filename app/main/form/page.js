@@ -299,7 +299,7 @@ export default function FormPage() {
                 </Form.Item>
 
                 <Form.Item
-                    label="Department">
+                    label="Assign to">
                     <Input
                         value="ONM"
                         readOnly
