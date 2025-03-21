@@ -45,7 +45,7 @@ export default function MapComponent({ lat, lng, changeLocation }) {
     <div className="h-[500px] w-full">
       <MapContainer
         center={[position.lat, position.lng]}
-        zoom={13}
+        zoom={20}
         scrollWheelZoom={true}
         style={{ height: "100%", width: "100%" }}
       >

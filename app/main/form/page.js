@@ -12,7 +12,7 @@ const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
 const videoConstraints = {
     facingMode: FACING_MODE_USER
-  };
+};
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import 'react-quill-new/dist/quill.snow.css';
@@ -28,7 +28,6 @@ const modules = {
 };
 export default function FormPage() {
     const router = useRouter();
-
     const [subjectList, setSubjectList] = useState([])
     const [regionList, setRegionList] = useState([])
     const [location, setLocation] = useState({ lat: 0, lng: 0 });
@@ -45,11 +44,11 @@ export default function FormPage() {
 
     const webcamRef = useRef(null);
     const webcamSwitch = useCallback(() => {
-        setFacingMode(prevMode => 
+        setFacingMode(prevMode =>
             prevMode === FACING_MODE_USER ? FACING_MODE_ENVIRONMENT : FACING_MODE_USER
         );
     }, []);
-    
+
 
     const captureImage = () => {
         const imageSrc = webcamRef.current.getScreenshot();
@@ -156,6 +155,20 @@ export default function FormPage() {
         fetchRegionList()
         getUserLocation()
         fetchTicketId()
+        navigator.permissions
+            .query({ name: "geolocation" })
+            .then((result) => {
+                if (result.state === "granted") {
+                    getUserLocation();
+                } else if (result.state === "prompt") {
+                    setShowAllowButton(true);
+                }
+                result.onchange = () => {
+                    if (result.state === "granted") {
+                        getUserLocation();
+                    }
+                };
+            });
     }, [])
 
     const onFinish = async (values) => {
@@ -163,15 +176,15 @@ export default function FormPage() {
             message.error('Access Location Permission Must Be Permitted!')
             return
         }
-        if(!values.description || values.description == '<p><br></p>') {
+        if (!values.description || values.description == '<p><br></p>') {
             message.error('Please input the description')
             return
         }
-        if(!listCapturedImage.length) {
+        if (!listCapturedImage.length) {
             message.error("Please attach atleast 1 captured image")
             return
         }
-        if(capturedImage) {
+        if (capturedImage) {
             message.error("Image not yet confirmed / undo!")
             return
         }
@@ -202,9 +215,9 @@ export default function FormPage() {
                 title: 'Success',
                 text: `Ticket with ID ${data.data.data.newTicket.ticket_id} has been created`
             })
-            .then(() => {
-                window.location.reload()
-            })
+                .then(() => {
+                    window.location.reload()
+                })
         } catch (error) {
             console.log(error.response.data.error);
             Swal.fire({
@@ -278,7 +291,7 @@ export default function FormPage() {
                         </Button>
                     )}
 
-                    {(location.lat && location.lng) && (
+                    {(location.lat != 0 && location.lng != 0) && (
                         <div className="my-2">
                             <MapComponent lat={location.lat} lng={location.lng} changeLocation={setLocation} />
                         </div>
@@ -303,10 +316,10 @@ export default function FormPage() {
                     />
                 </Form.Item>
 
-                <Form.Item 
-                label="Description" name="description" style={{
-                    height:'300px'
-                }}>
+                <Form.Item
+                    label="Description" name="description" style={{
+                        height: '300px'
+                    }}>
                     <ReactQuill style={{
                         height: '230px'
                     }} theme="snow" value={description} onChange={setDescription} modules={modules} />
@@ -323,7 +336,7 @@ export default function FormPage() {
                                 videoConstraints={{
                                     ...videoConstraints,
                                     facingMode
-                                  }}
+                                }}
                             />
                             <Button type="primary" onClick={captureImage} className="mt-2 mr-4">
                                 Take Picture
@@ -350,7 +363,7 @@ export default function FormPage() {
                                     Confirm
                                 </Button>
                                 <Button onClick={() => setCapturedImage(undefined)} icon={<XOutlined />} type="primary" variant="solid" color="red">
-                                Undo
+                                    Undo
                                 </Button>
                             </div>
                         </div>
