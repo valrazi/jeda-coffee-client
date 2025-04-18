@@ -1,10 +1,10 @@
 const { Sequelize } = require("sequelize");
 require('dotenv').config()
 const sequelize = new Sequelize({
-  database: process.env.TICKETING_DB,
-  host: process.env.TICKETING_HOST,
-  username: process.env.TICKETING_USERNAME,
-  password: process.env.TICKETING_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   dialect: 'mysql',
   dialectModule: require('mysql2')
 })

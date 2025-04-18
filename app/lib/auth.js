@@ -1,7 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from '../../models/user'
 import bcrypt from 'bcryptjs'
-import crypto from 'crypto'
+import Customer from "../../models/customer";
 export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     session: { strategy: "jwt" },
@@ -16,30 +15,34 @@ export const authOptions = {
           password: { label: "Password", type: "password", required: true },
         },
         async authorize(credentials) {
-          const user = await User.findOne({ where: { email: credentials.email } });
-          if (!user) throw new Error("No user found");
+          const customer = await Customer.findOne({ where: { email: credentials.email } });
+          if (!customer) throw new Error("No user found");
   
-          const isValid = bcrypt.compareSync(credentials.password, user.password);
+          const isValid = bcrypt.compareSync(credentials.password, customer.password);
           
           if (!isValid) {
-            const isValidMd5 = crypto.createHash('md5').update(credentials.password).digest('hex')
-            console.log({isValidMd5: isValidMd5 == user.password});
-            if(isValidMd5 != user.password) {
-              throw new Error("Invalid credentials");
-            }
+            throw new Error("Invalid credentials");
           } 
   
-          return { id: user.id, name: user.name, email: user.email };
+          return { id: customer.id, name: customer.full_name, email: customer.email, phone_number: customer.phone_number, kota_asal: customer.kota_asal };
         }
       })
     ],
     callbacks: {
       async jwt({ token, user }) {
-        if (user) token.id = user.id;
+        if (user) {
+          token.id = user.id;
+          token.name = user.name
+          token.email = user.email
+          token.kota_asal = user.kota_asal
+        }
         return token;
       },
       async session({ session, token }) {
         session.user.id = token.id;
+        session.user.name = token.name; 
+        session.user.email = token.email
+        session.user.kota_asal= token.kota_asal
         return session;
       }
     },

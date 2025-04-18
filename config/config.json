@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "Valrazor88@",
-    "database": "test",
+    "database": "jeda_coffee",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
