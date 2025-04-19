@@ -71,7 +71,7 @@ export default function MainLayout({ children }) {
 
         <footer className="w-full bottom-0 left-0 right-">
           {
-            (cart && cart.cart_items && cart.cart_items.length && pathName == '/main') && (
+            (cart && cart.cart_items && cart.cart_items.length > 0 && pathName == '/main') && (
               <div onClick={() => {
                 router.push('/main/cart')
               }} className="w-1/2 hover:cursor-pointer bg-black text-white rounded-xl mb-2 flex px-4 py-2  m-auto justify-between">
