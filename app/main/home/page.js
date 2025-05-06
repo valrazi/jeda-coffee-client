@@ -72,18 +72,6 @@ export default function MainPage() {
     }
     return (
         <div className="w-full flex flex-col h-full" key={'hero-home'}>
-            <header className="w-full bg-white flex justify-between items-center p-4 border-b-2 border-b-gray-100">
-                <Link href={'/main'}>
-                    <img
-                        src="/logo.png"
-                        className="w-24 cursor-pointer"
-                        alt="Logo"
-                    />
-                </Link>
-                <Button className="text-white" type="default" variant="solid" color="default" onClick={() => router.push('/main')}>
-                    Login
-                </Button>
-            </header>
             {
                 isLoading ? (
                     <Spin />

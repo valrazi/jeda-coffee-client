@@ -5,7 +5,7 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { signOut } from "next-auth/react";
 import '@ant-design/v5-patch-for-react-19';
 import { Button, message } from "antd";
-import { UserOutlined, ShoppingCartOutlined, OrderedListOutlined, HomeOutlined } from '@ant-design/icons'
+import { UserOutlined, ShoppingCartOutlined, OrderedListOutlined, HomeOutlined, AccountBookFilled } from '@ant-design/icons'
 import Swal from "sweetalert2";
 import { useRouter, usePathname } from 'next/navigation'
 import { useEffect, useState } from "react";
@@ -69,12 +69,12 @@ export default function MainLayout({ children }) {
           {children}
         </main>
 
-        <footer className="w-full bottom-0 left-0 right-">
+        <footer className="w-full bottom-0 left-0 right-0">
           {
             (cart && cart.cart_items && cart.cart_items.length > 0 && pathName == '/main') && (
               <div onClick={() => {
                 router.push('/main/cart')
-              }} className="w-1/2 hover:cursor-pointer bg-black text-white rounded-xl mb-2 flex px-4 py-2  m-auto justify-between">
+              }} className="w-[80%] md:w-1/2 hover:cursor-pointer bg-black text-white rounded-xl mb-2 flex px-4 py-2 my-2  m-auto justify-between">
                 <h1>{cart.cart_items.length} Item</h1>
                 <h1>Rp.{cart.total_price}</h1>
               </div>
@@ -82,10 +82,12 @@ export default function MainLayout({ children }) {
           }
           <div className="flex justify-around py-3 bg-black text-white">
 
+
+
             <Link href={`/main/`}>
               <span className="flex flex-col items-center justify-center gap-1 cursor-pointer">
-                <HomeOutlined />
-                <span className={pathName == '/main' ? 'rounded-sm border-b-4 border-red-400' : ''} >Home</span>
+                <AccountBookFilled />
+                <span className={pathName == '/main' ? 'rounded-sm border-b-4 border-red-400' : ''} >Menu</span>
               </span>
             </Link>
 
@@ -93,12 +95,19 @@ export default function MainLayout({ children }) {
             <Link href={`/main/cart`}>
               <span className="relative flex flex-col items-center justify-center gap-1 cursor-pointer">
                 <ShoppingCartOutlined />
-                <span className={pathName == '/main/cart' ? 'rounded-sm border-b-4 border-red-400' : ''}>Cart</span>
+                <span className={pathName == '/main/cart' ? 'rounded-sm border-b-4 border-red-400' : '' }>Cart</span>
                 <span className="absolute -right-4 -top-1 bg-red-700 w-4 h-4 shrink-0 grow-0 text-center rounded-full flex items-center justify-center text-white text-[8px]">
                   {
                     (cart && !Array.isArray(cart) && cart.cart_items.length) && cart.cart_items.length
                   }
                 </span>
+              </span>
+            </Link>
+
+            <Link href={`/main/home`}>
+              <span className="flex flex-col items-center justify-center gap-1 cursor-pointer">
+                <HomeOutlined />
+                <span className={pathName == '/main/home' ? 'rounded-sm border-b-4 border-red-400' : ''} >Home</span>
               </span>
             </Link>
 

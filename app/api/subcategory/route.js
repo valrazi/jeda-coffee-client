@@ -4,7 +4,6 @@ import Subcategory from "../../../models/subcategory";
 export async function GET(req) {
     try {
         let data = await Subcategory.findAll()
-        data = Object.groupBy(data, ({category}) => category)
         return NextResponse.json({
             data
         }, {

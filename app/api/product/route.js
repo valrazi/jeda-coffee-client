@@ -4,12 +4,21 @@ import {authOptions} from '@/lib/auth'
 import Product from "../../../models/product";
 import Subcategory from "../../../models/subcategory";
 import Favorite from "../../../models/favorites";
+import { col, fn } from "sequelize";
 export async function GET(req) {
     try {
         const subcategory = req.nextUrl.searchParams.get('subcategory')
         const query = {}
+        const order = []
         if(subcategory) {
-            query.subcategory_id = parseInt(subcategory)
+            query.subcategory_id = subcategory
+        }
+        if(query.orderBy && query.order && (query.order?.toLowerCase() == 'desc' || query.order?.toLowerCase() == 'asc')) {
+            if(query.orderBy == 'favoriteCount') {
+               order.push([literal('favoriteCount'), query.order])
+            }else {
+                order.push([query.orderBy, query.order])
+            }
         }
         const data = await Product.findAll({
             include: [
@@ -18,10 +27,19 @@ export async function GET(req) {
                 },
                 {
                     model: Favorite,
-                    required: false
+                    required: false,
+                    attributes: [] 
                 }
             ],
-            where: query
+            attributes: {
+                include: [
+                    [fn('COUNT', col('favorites.id')), 'favoriteCount']
+                ]
+            },
+            group: ['products.id', 'subcategory.id'],
+            where: query,
+            limit: query.limit && Number(query.limit) ? Number(query.limit) : null,
+            order,
         })
         return NextResponse.json({
             data

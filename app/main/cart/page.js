@@ -7,7 +7,7 @@ import { Button, Empty, message } from "antd"
 import axios from "axios"
 import Link from "next/link"
 import { useState } from "react"
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
 export default function CartPage({ }) {
     const [cart, setCart] = useCartContext()
     const router = useRouter()
@@ -42,8 +42,8 @@ export default function CartPage({ }) {
     return (
         (cart && cart.cart_items && cart.cart_items.length) ? (
             <div className="px-4 h-full overflow-y-auto">
-                
-            <CheckoutModal isPaidCashier={isPaidCashier} showModal={showModal} setShowModal={setShowModal} finishCheckout={finishCheckout}/>
+
+                <CheckoutModal isPaidCashier={isPaidCashier} showModal={showModal} setShowModal={setShowModal} finishCheckout={finishCheckout} />
                 {
                     cart.cart_items.map((p) => {
                         return (
@@ -60,10 +60,10 @@ export default function CartPage({ }) {
                                         </div>
                                         <div className=" flex gap-2">
                                             <Button onClick={() => deleteCartItem(p.id)} size="small" type="primary" variant="solid" color="red" >
-                                                    <span className="relative text-xs flex items-center justify-center gap-2">
-                                                        <DeleteOutlined />
-                                                        Delete
-                                                    </span>
+                                                <span className="relative text-xs flex items-center justify-center gap-2">
+                                                    <DeleteOutlined />
+                                                    Delete
+                                                </span>
                                             </Button>
                                             <Button size="small" type="primary" variant="solid" color="default" >
                                                 <Link href={`/main/product/${p.product.id}`} >
@@ -86,22 +86,24 @@ export default function CartPage({ }) {
                 }
 
 
-                <div className="w-full min-h-20 border border-gray-300 mt-4 mb-12  z-[999]  rounded-xl py-1 px-4 text-black">
-                    <div className="w-full flex justify-between mb-2 items-center">
-                        <h1 className="text-xs font-bold">Total Price</h1>
-                        <h2 className="text-sm font-bold">{formatRupiah(cart.total_price)}</h2>
+                <div className="w-full border border-gray-300 mt-4 mb-4  z-[999]  rounded-xl py-1 px-4 text-black">
+                    <div className="w-full flex justify-between mb-2 items-center text">
+                        <h1 className="text-sm  font-bold">Total Price</h1>
+                        <h2 className="text-sm  font-bold">{formatRupiah(cart.total_price)}</h2>
                     </div>
+                </div>
 
-                    <Button onClick={initCheckout} style={{ width: '100%'}} variant="solid" color="default">Checkout</Button>
-                    
-                    <Button onClick={initPaidCashier} style={{ width: '100%', margin: '1rem 0'  }} variant="solid" color="blue">Bayar di Kasir</Button>
+                <div className="w-full flex flex-col lg:flex-row gap-2">
+                    <Button onClick={initCheckout} style={{ width: '100%' }} variant="solid" color="default">Checkout</Button>
+
+                    <Button onClick={initPaidCashier} style={{ width: '100%' }} variant="solid" color="blue">Bayar di Kasir</Button>
                 </div>
             </div>
         ) :
-        (
-            <div className="my-4">
-                <Empty/>
-            </div>
-        )
-    ) 
+            (
+                <div className="my-4">
+                    <Empty />
+                </div>
+            )
+    )
 }

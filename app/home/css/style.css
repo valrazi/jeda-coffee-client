@@ -1,0 +1,21 @@
+.menu-tag {
+    font-size: 8px;
+}
+
+@media (min-width: 1024px) {
+    .menu-tag {
+        font-size: 12px;
+    }
+}
+
+.bg-hero {
+    background-image: url('/jeda_hero.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-testimoni {
+    background-image: url('/jeda_testimoni.jpg');
+    background-size: cover;
+    background-position: center;
+}

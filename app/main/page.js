@@ -8,6 +8,9 @@ import { ShoppingCartOutlined, EditOutlined, MinusCircleOutlined, PlusCircleOutl
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useCartContext } from "@/context/CartContext"
+import { Fade } from 'react-awesome-reveal'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faClose } from "@fortawesome/free-solid-svg-icons"
 const { OptGroup } = Select
 export default function MainPage() {
     const dashboardUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL
@@ -53,13 +56,6 @@ export default function MainPage() {
             console.log(error);
             message.error('Fetch Subcategories Failed')
         }
-    }
-
-    const handleSubcategory = async (values) => {
-        setQuery({
-            Search: undefined,
-            subcategory: values
-        })
     }
 
     const changeQty = async (action, product) => {
@@ -116,98 +112,134 @@ export default function MainPage() {
         console.log(cart);
     }, [cart, query])
 
+
+    const handleSubcategory = async (values) => {
+        if(query.subcategory == values) {
+            setQuery({
+                Search: undefined,
+                subcategory: undefined
+            })
+        }else {
+            setQuery({
+                Search: undefined,
+                subcategory: values
+            })
+        }
+    }
     return (
-        <div className="flex flex-col gap-1 p-4">
+        <div className="flex flex-col gap-1 p-4" key={'list-product'}>
             {
-                subcategories && (
+                (subcategories && subcategories.length) && (
                     <div className="w-full flex flex-col gap-2">
-                        <h1 className="border-b-2 border-gray-200 text-center"><strong>JEDA</strong><br></br><span className="italic font-extralight">Jembatan Doa</span></h1>
-                        <Select allowClear onChange={handleSubcategory} style={{ width: '100%' }} placeholder="Subcategory">
-                            {Object.keys(subcategories).map((category) => (
-                                <Select.OptGroup key={category} label={category}>
-                                    {Array.isArray(subcategories[category]) && subcategories[category].map((item) => (
-                                        <Select.Option key={item.id} value={item.id}>
-                                            {item.name}
-                                        </Select.Option>
-                                    ))}
-                                </Select.OptGroup>
-                            ))}
-                        </Select>
+                        <div className="w-full flex overflow-x-scroll gap-2 scrollbar-none">
+                            {
+                                subcategories.map((s) => (
+                                    <Button type={query.subcategory == s.id ? 'primary' : 'default'} onClick={() => handleSubcategory(s.id)}>
+                                        <div className="w-full flex gap-2 items-center">
+                                            <span>{s.name}</span>
+                                            {
+                                                (query.subcategory == s.id) && (
+                                                    <FontAwesomeIcon icon={faClose}/>
+                                                )
+                                            }
+                                        </div>
+                                    </Button>
+                                ))
+                            }
+                        </div>
                     </div>
                 )
             }
             {
                 products.length ? (
-                    products.map((p) => {
-                        return (
-                            <div className="border-b border-gray-200 p-2 flex gap-2" key={p.id}>
-                                <img src={`${dashboardUrl}${p.image}`} className="max-w-18 min-w-18 object-cover shrink-0 grow-0 h-fit rounded-lg aspect-square" />
-                                <div className="w-full">
-                                    {/* <span className="shrink-0 grow-0 w-fit rounded-xl text-white py-0.5 px-2 text-[8px] bg-black/70 flex justify-center items-center gap-1">{p.category}</span> */}
-                                    <Row>
-                                        <Tag color="#2b2b2b" >{p.category}</Tag>
-                                        {
-                                            p.subcategory && (
-                                                <Tag color="#807d7d" >{p.subcategory.name}</Tag>
-                                            )
-                                        }
-                                    </Row>
-                                    <h1 className="text-xs font-bold mt-1">{p.name}</h1>
-                                    <p className="text-[8px] text-gray-300 line-clamp-2">{p.description}</p>
-                                    {
-                                        (p.favorites && p.favorites.length > 0) && (
-                                            <div className="flex gap-2 items-center my-1">
-                                                <HeartFilled style={{color: 'red', fontSize: '12px'}}/>
-                                                <p className="text-xs text-gray-300">{p.favorites.length} Likes </p>
-                                            </div>
-                                        )
-                                    }
-                                    <div className="w-full flex justify-between items-center">
-                                        <p className="text-xs">{formatRupiah(+p.price)}</p>
-                                        <div className="flex gap-2 items-center">
-                                            {
-                                                p.is_exist && (
-                                                    <div className="flex gap-2 justify-center items-center my-2">
-                                                        {
-                                                            p.on_cart > 1 ?
-                                                                <Button icon={<MinusCircleOutlined />} onClick={() => changeQty('minus', p)} /> :
-                                                                <Button icon={<DeleteOutlined />} onClick={() => deleteItem(p)} />
-                                                        }
-                                                        <InputNumber style={{ width: '50px' }} value={p.on_cart} max={p.stock} min={0} disabled />
-                                                        <Button icon={<PlusCircleOutlined />} onClick={() => changeQty('plus', p)} />
-                                                    </div>
-                                                )
-                                            }
-                                            <Button size="small" type="primary" variant="solid" color="default" >
-                                                <Link href={`/main/product/${p.id}`} >
-                                                    {
-                                                        p.is_exist
-                                                            ?
-                                                            <span className="relative text-xs flex items-center justify-center gap-2">
-                                                                <EditOutlined />
-                                                                Edit
-                                                                <span className="text-[8px] rounded-full bg-red-700 flex justify-center items-center w-4 h-4 absolute -top-3 -right-4">{p.on_cart}</span>
-                                                            </span>
-                                                            :
-                                                            <span className="text-xs flex items-center justify-center gap-2">
-                                                                < ShoppingCartOutlined />
-                                                                Add
-                                                            </span>
-                                                    }
-                                                </Link>
-                                            </Button>
-                                        </div>
-
-
-                                    </div>
-                                </div>
+                    <Fade cascade>
+                        <div id='menu-list' className="w-full  items-center justify-center  flex flex-wrap gap-2 my-2">
+                            <div className="w-full flex justify-center ">
+                                <h1 className="text-xl lg:text-4xl  font-semibold border-b-2 border-gray-500">Our's Menu</h1>
                             </div>
-                        )
-                    })
+                            {
+                                products.map((p) => {
+                                    return (
+                                        <div className=" w-[45%] lg:w-1/5  p-2 flex flex-col gap-2 shadow-md lg:h-full" key={p.id}>
+                                            <img src={`${dashboardUrl}${p.image}`} className="w-full object-cover shrink-0 grow-0 h-fit rounded-lg aspect-square" />
+                                            <div className="w-full flex flex-col justify-between">
+                                                {/* <span className="shrink-0 grow-0 w-fit rounded-xl text-white py-0.5 px-2 text-[8px] bg-black/70 flex justify-center items-center gap-1">{p.category}</span> */}
+                                                <div className="w-full">
+                                                    <div className="w-full flex flex-col gap-1">
+                                                        <Tag className="menu-tag" color="#2b2b2b">{p.category}</Tag>
+                                                        {
+                                                            p.subcategory && (
+                                                                <Tag className="menu-tag" color="#807d7d">{p.subcategory.name}</Tag>
+                                                            )
+                                                        }
+                                                    </div>
+                                                    <h1 className="text-xs font-bold mt-1">{p.name}</h1>
+                                                    <p className="text-[8px] text-gray-300 line-clamp-1">{p.description}</p>
+                                                    {
+                                                        (p.favoriteCount) ? (
+                                                            <div className="flex gap-2 items-center my-1">
+                                                                <HeartFilled style={{ color: 'red', fontSize: '12px' }} />
+                                                                <p className="text-xs text-gray-300">{p.favoriteCount} Likes </p>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="flex gap-2 items-center my-1">
+                                                                <HeartFilled style={{ color: 'transparent', fontSize: '12px' }} />
+                                                                <p className="text-xs text-transparent">0 Likes </p>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
+                                                <div className="w-full flex flex-col h-22 justify-end">
+                                                    <p className="text-xs">{formatRupiah(+p.price)}</p>
+                                                    <div className="flex flex-col ">
+                                                        {
+                                                            p.is_exist && (
+                                                                <div className="flex gap-2 justify-center items-center my-2">
+                                                                    {
+                                                                        p.on_cart > 1 ?
+                                                                            <Button icon={<MinusCircleOutlined />} onClick={() => changeQty('minus', p)} /> :
+                                                                            <Button icon={<DeleteOutlined />} onClick={() => deleteItem(p)} />
+                                                                    }
+                                                                    <InputNumber style={{ width: '50px' }} value={p.on_cart} max={p.stock} min={0} disabled />
+                                                                    <Button icon={<PlusCircleOutlined />} onClick={() => changeQty('plus', p)} />
+                                                                </div>
+                                                            )
+                                                        }
+                                                        <Button size="small" type="primary" variant="solid" color="default">
+                                                            <Link href={`/main/product/${p.id}`}>
+                                                                {
+                                                                    p.is_exist ? (
+                                                                        <span className="relative inline-flex items-center justify-center text-xs gap-2">
+                                                                            <EditOutlined />
+                                                                            Edit
+                                                                            <span className="absolute -top-2 -right-14 lg:-right-28 text-[8px] rounded-full bg-red-700 text-white flex justify-center items-center w-4 h-4">
+                                                                                {p.on_cart}
+                                                                            </span>
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="text-xs flex items-center justify-center gap-2">
+                                                                            <ShoppingCartOutlined />
+                                                                            Add
+                                                                        </span>
+                                                                    )
+                                                                }
+                                                            </Link>
+                                                        </Button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </Fade>
                 ) : (
-                    <Empty />
+                    <Empty style={{margin: '1em'}} />
                 )
             }
+
         </div>
     )
 }
