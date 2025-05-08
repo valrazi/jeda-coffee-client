@@ -114,12 +114,12 @@ export default function MainPage() {
 
 
     const handleSubcategory = async (values) => {
-        if(query.subcategory == values) {
+        if (query.subcategory == values) {
             setQuery({
                 Search: undefined,
                 subcategory: undefined
             })
-        }else {
+        } else {
             setQuery({
                 Search: undefined,
                 subcategory: values
@@ -139,7 +139,7 @@ export default function MainPage() {
                                             <span>{s.name}</span>
                                             {
                                                 (query.subcategory == s.id) && (
-                                                    <FontAwesomeIcon icon={faClose}/>
+                                                    <FontAwesomeIcon icon={faClose} />
                                                 )
                                             }
                                         </div>
@@ -200,19 +200,19 @@ export default function MainPage() {
                                                                             <Button icon={<MinusCircleOutlined />} onClick={() => changeQty('minus', p)} /> :
                                                                             <Button icon={<DeleteOutlined />} onClick={() => deleteItem(p)} />
                                                                     }
-                                                                    <InputNumber style={{ width: '50px' }} value={p.on_cart} max={p.stock} min={0} disabled />
+                                                                    <InputNumber style={{ width: '50px', color: 'black' }} value={p.on_cart} max={p.stock} min={0} disabled />
                                                                     <Button icon={<PlusCircleOutlined />} onClick={() => changeQty('plus', p)} />
                                                                 </div>
                                                             )
                                                         }
-                                                        <Button size="small" type="primary" variant="solid" color="default">
-                                                            <Link href={`/main/product/${p.id}`}>
+                                                        <Link className="w-full" href={`/main/product/${p.id}`}>
+                                                            <Button className="w-full" size="small" type="primary" variant="solid" color="default">
                                                                 {
                                                                     p.is_exist ? (
-                                                                        <span className="relative inline-flex items-center justify-center text-xs gap-2">
+                                                                        <span className="relative inline-flex items-center justify-center text-xs gap-2 w-full">
                                                                             <EditOutlined />
                                                                             Edit
-                                                                            <span className="absolute -top-2 -right-14 lg:-right-28 text-[8px] rounded-full bg-red-700 text-white flex justify-center items-center w-4 h-4">
+                                                                            <span className="absolute -top-2 right-0 translate-x-4  text-[8px] rounded-full bg-red-700 text-white flex justify-center items-center w-4 h-4">
                                                                                 {p.on_cart}
                                                                             </span>
                                                                         </span>
@@ -223,8 +223,8 @@ export default function MainPage() {
                                                                         </span>
                                                                     )
                                                                 }
-                                                            </Link>
-                                                        </Button>
+                                                            </Button>
+                                                        </Link>
 
                                                     </div>
                                                 </div>
@@ -236,7 +236,7 @@ export default function MainPage() {
                         </div>
                     </Fade>
                 ) : (
-                    <Empty style={{margin: '1em'}} />
+                    <Empty style={{ margin: '1em' }} />
                 )
             }
 

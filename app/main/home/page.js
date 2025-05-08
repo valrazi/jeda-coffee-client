@@ -174,8 +174,8 @@ export default function MainPage() {
                                                                             </div>
                                                                         )
                                                                     }
-                                                                    <Button className="w-full" size="small" type="primary" variant="solid" color="default" >
-                                                                        <Link href={`/main/product/${p.id}`} >
+                                                                    <Link className='w-full' href={`/main/product/${p.id}`} >
+                                                                        <Button className="w-full" size="small" type="primary" variant="solid" color="default" >
                                                                             {
                                                                                 p.is_exist
                                                                                     ?
@@ -190,8 +190,8 @@ export default function MainPage() {
                                                                                         Add
                                                                                     </span>
                                                                             }
-                                                                        </Link>
-                                                                    </Button>
+                                                                        </Button>
+                                                                    </Link>
                                                                 </div>
                                                             </div>
                                                         </div>

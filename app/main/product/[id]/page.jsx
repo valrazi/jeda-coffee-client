@@ -86,7 +86,7 @@ export default function DetailProduct({ params }) {
     }, [cart, product])
     return (
         <div className="w-full h-full overflow-y-auto">
-            <img className="object-cover h-60 aspect-square w-full" src={`${dashboardUrl}${product.image}`} />
+            <img className="object-cover h-60 lg:h-full aspect-square w-full" src={`${dashboardUrl}${product.image}`} />
             <div className="my-4 px-4 h-full overflow-y-auto">
                 <h1 className="text-2xl font-bold">{product.name}</h1>
 
@@ -111,7 +111,7 @@ export default function DetailProduct({ params }) {
                     </div>
                 </div>
                 <div className="w-full flex justify-center items-center gap-4 my-2">
-                    <Button loading={loading} onClick={() => addToCart()} style={{ width: '100%' }} variant="solid" color="gold">Add to Cart</Button>
+                    <Button loading={loading} onClick={() => addToCart()} className="w-full lg:w-1/2" variant="solid" color="gold">Add to Cart</Button>
                 </div>
             </div>
         </div>
