@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import Orders from "../../../models/order";
 import OrderItem from "../../../models/order_item";
 import Product from "../../../models/product";
+import Review from "../../../models/reviews";
 export async function GET(req) {
     try {
         const session = await  getServerSession(authOptions)
@@ -27,6 +28,9 @@ export async function GET(req) {
                             model: Product
                         }
                     ]
+                },
+                {
+                    model: Review,
                 }
             ],
             where: {

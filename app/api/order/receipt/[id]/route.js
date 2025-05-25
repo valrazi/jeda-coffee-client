@@ -7,7 +7,7 @@ import Customer from '../../../../../models/customer'
 export async function GET(request, { params }) {
     const {id} = await params
     const order = await Orders.findOne({
-        where: { id: parseInt(id) },
+        where: { id: id },
         include: [
             {
                 model: OrderItem,

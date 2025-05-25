@@ -1,6 +1,7 @@
 "use client"
 import DownloadReceiptButton from "@/components/Order/button.receipt";
 import DetailOrderModel from "@/components/Order/detail.modal";
+import ReviewOrderModel from "@/components/Order/review.modal";
 import { formatRupiah } from "@/lib/formatter";
 import { Badge, Button, message, Tag } from "antd";
 import axios from "axios";
@@ -11,6 +12,7 @@ import Swal from "sweetalert2";
 export default function OrderPage() {
     const [orders, setOrders] = useState([])
     const [showModal, setShowModal] = useState(false)
+    const [reviewModal, setReviewModal] = useState(false)
     const [detailOrder, setDetailOrder] = useState()
     const [loading, setLoading] = useState(false)
     const fetchOrder = async () => {
@@ -26,6 +28,17 @@ export default function OrderPage() {
         setDetailOrder(order)
         setShowModal(true)
     }
+
+    const setModalReview = (order) => {
+        setDetailOrder(order)
+        setReviewModal(true)
+    }
+
+    const closeReviewModal = () => {
+        fetchOrder()
+        setReviewModal(false)
+    }
+
     const cancelOrder = (order) => {
         Swal.fire({
             showCancelButton: true,
@@ -83,6 +96,12 @@ export default function OrderPage() {
                 setShowModal={setShowModal}
                 data={detailOrder}
             />
+            <ReviewOrderModel
+                showModal={reviewModal}
+                closeReviewModal={closeReviewModal}
+                setShowModal={setReviewModal}
+                data={detailOrder}
+            />
             {
                 (orders) && (
                     orders.map((o) => {
@@ -135,7 +154,10 @@ export default function OrderPage() {
                                         )
                                     }
                                     {o.order_status === 'completed' && (
-                                        <DownloadReceiptButton  orderId={o.id} />
+                                        <div className="w-full flex flex-col gap-y-2">
+                                            <Button size="small" variant="solid" color="gold" onClick={() => setModalReview(o)}>Review</Button>
+                                            <DownloadReceiptButton  orderId={o.id} />
+                                        </div>
                                     )}
                                 </div>
                             </div>

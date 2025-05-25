@@ -174,12 +174,12 @@ export default function MainPage() {
                                                         }
                                                     </div>
                                                     <h1 className="text-xs font-bold mt-1">{p.name}</h1>
-                                                    <p className="text-[8px] text-gray-300 line-clamp-1">{p.description}</p>
+                                                    <p className="text-[8px] text-black line-clamp-1">{p.description}</p>
                                                     {
                                                         (p.favoriteCount) ? (
                                                             <div className="flex gap-2 items-center my-1">
                                                                 <HeartFilled style={{ color: 'red', fontSize: '12px' }} />
-                                                                <p className="text-xs text-gray-300">{p.favoriteCount} Likes </p>
+                                                                <p className="text-xs text-black">{p.favoriteCount} Likes </p>
                                                             </div>
                                                         ) : (
                                                             <div className="flex gap-2 items-center my-1">

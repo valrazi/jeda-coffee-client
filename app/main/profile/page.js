@@ -96,7 +96,7 @@ const ProfilePage = () => {
         <p>{user?.email}</p>
 
         <div className='w-full flex flex-col gap-2 my-4'>
-          <Button variant='solid' color='default' icon={<EditOutlined />} onClick={() => setIsEditNameModalOpen(true)} style={{ marginRight: 8 }}>
+          <Button variant='solid' color='default' icon={<EditOutlined />} onClick={() => setIsEditNameModalOpen(true)} >
             Edit Full Name
           </Button>
 

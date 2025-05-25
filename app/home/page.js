@@ -12,7 +12,8 @@ import Link from "next/link"
 import Swal from "sweetalert2"
 import { signOut } from "next-auth/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faLocationDot, faMinus, faMugHot, faQuoteLeft, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faLocationDot, faMinus, faMugHot, faQuoteLeft, faStar, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faTiktok, faInstagram } from '@fortawesome/free-brands-svg-icons'
 const { OptGroup } = Select
 export default function MainPage() {
     const dashboardUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL
@@ -114,12 +115,42 @@ export default function MainPage() {
                                         <span>Weekend 11:00 - 00:00</span>
                                     </h1>
                                 </div>
+
+                                <div className='flex gap-4'>
+                                    <a href='https://www.tiktok.com/@jedakopi'>
+                                        <h1 className='text-white font-extralight flex gap-2 items-center text-xs mt-1'>
+                                            <FontAwesomeIcon icon={faTiktok} />
+                                            <span>@jedakopi</span>
+                                        </h1>
+                                    </a>
+
+                                    <a href='https://www.instagram.com/jedakopi__'>
+                                        <h1 className='text-white font-extralight flex gap-2 items-center text-xs mt-1'>
+                                            <FontAwesomeIcon icon={faInstagram} />
+                                            <span>@jedakopi__</span>
+                                        </h1>
+                                    </a>
+
+                                </div>
+                                <h1 className='text-white font-extralight flex gap-2 items-center text-xs mt-1'>
+                                    <FontAwesomeIcon icon={faPhone} />
+                                    <span>0812-1161-3025</span>
+                                </h1>
                                 <button onClick={navigateToMenu} className='bg-white px-4 py-1 rounded-lg hover:bg-white/70 hover:cursor-pointer flex gap-2 items-center'>
                                     <FontAwesomeIcon icon={faMugHot} />
                                     <span>Menu</span>
                                 </button>
                             </div>
                         </div>
+                        <Fade cascade>
+                            <div className='w-full flex justify-center items-center'>
+                                <h1 className="text-xl lg:text-4xl  font-semibold border-b-2 border-gray-500">About Us</h1>
+                            </div>
+                            <div className='min-h-[200px] w-full flex flex-col items-center justify-center gap-4 lg:flex-row lg:items-center lg:gap-8'>
+                                <h1 className='w-[80%] lg:w-1/5 lg:text-xl'>Jeda Coffee and Space Berdiri sejak November 2021, memiliki pelayanan yang ramah dan menyediakan koneksi internet gratis untuk setiap pengunjungnya.</h1>
+                                <img src='/logo.png' className='' />
+                            </div>
+                        </Fade>
                         <Fade cascade>
                             <div className='w-full flex justify-center items-center'>
                                 <h1 className="text-xl lg:text-4xl  font-semibold border-b-2 border-gray-500">Impression</h1>
@@ -156,12 +187,12 @@ export default function MainPage() {
                                                                 }
                                                             </div>
                                                             <h1 className="text-xs font-bold mt-1">{p.name}</h1>
-                                                            <p className="text-[8px] text-gray-300 line-clamp-1">{p.description}</p>
+                                                            <p className="text-[8px] text-black line-clamp-1">{p.description}</p>
                                                             {
                                                                 (p.favoriteCount) ? (
                                                                     <div className="flex gap-2 items-center my-1">
                                                                         <HeartFilled style={{ color: 'red', fontSize: '12px' }} />
-                                                                        <p className="text-xs text-gray-300">{p.favoriteCount} Likes </p>
+                                                                        <p className="text-xs text-black">{p.favoriteCount} Likes </p>
                                                                     </div>
                                                                 ) : (
                                                                     <div className="flex gap-2 items-center my-1">

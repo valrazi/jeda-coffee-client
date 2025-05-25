@@ -29,9 +29,13 @@ export default function SignIn() {
         }
     };
     return (
-        <div className=" min-h-screen w-full bg-gray-100 flex flex-col justify-center items-center">
+        <div className=" min-h-screen w-full bg-white flex flex-col justify-between items-center">
+            <div className="w-full items-center bg-black flex gap-2 text-white py-3 px-4">
+                <CoffeeOutlined className="text-sm font-semibold -translate-y-[0.1rem] lg:text-xl lg:-translate-y-[0.15rem]" />
+                <span className="text-sm font-semibold lg:text-xl">Jeda Kopi</span>
+            </div>
             <div className="w-full px-4">
-                <div className="w-full font-poppins max-w-[512px] bg-white m-auto p-4 rounded-xl shadow-md  flex flex-col items-center">
+                <div className="w-full font-poppins max-w-[512px] bg-white/25 m-auto p-4 rounded-xl shadow-md border-2 border-black   flex flex-col items-center">
                     <img src="/logo.png" className="w-28" />
                     <h1 className="font-poppins text-black font-bold text-[1.2rem] my-2 text-left">Sign In Existed Account</h1>
                     <Form
@@ -77,6 +81,9 @@ export default function SignIn() {
                 </div>
             </div>
 
+            <div className="w-full items-center justify-center bg-black flex gap-2 text-white py-2 px-4">
+                <span className="text-[8px] font-thin">©  Jeda Kopi. All rights reserved.</span>
+            </div>
         </div>
     )
 }

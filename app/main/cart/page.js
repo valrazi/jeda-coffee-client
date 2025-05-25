@@ -54,9 +54,10 @@ export default function CartPage({ }) {
                                     <p className=" text-gray-400 text-[8px]">Note: </p>
                                     <p className="text-[8px] text-gray-400 mb-1">{p.note}</p>
                                     <div className="w-full flex justify-between items-center">
-                                        <div>
+                                        <div className="relative">
                                             <p className=" font-bold text-[8px]">Total Price: </p>
                                             <p className="text-xs font-bold">{formatRupiah(+p.total_price)}</p>
+                                            <span className="text-[8px] rounded-full text-white bg-red-700 flex justify-center items-center w-4 h-4 absolute top-1 -right-4">{p.quantity}</span>
                                         </div>
                                         <div className=" flex gap-2">
                                             <Button onClick={() => deleteCartItem(p.id)} size="small" type="primary" variant="solid" color="red" >
@@ -70,7 +71,6 @@ export default function CartPage({ }) {
                                                     <span className="relative text-xs flex items-center justify-center gap-2">
                                                         <EditOutlined />
                                                         Edit
-                                                        <span className="text-[8px] rounded-full bg-red-700 flex justify-center items-center w-4 h-4 absolute -top-3 -right-4">{p.quantity}</span>
                                                     </span>
                                                 </Link>
                                             </Button>
@@ -94,9 +94,9 @@ export default function CartPage({ }) {
                 </div>
 
                 <div className="w-full flex flex-col lg:flex-row gap-2">
-                    <Button onClick={initCheckout} style={{ width: '100%' }} variant="solid" color="default">Checkout</Button>
+                    <Button onClick={initCheckout} style={{ width: '100%' }} variant="solid" color="default">PEMBAYARAN TRANSFER</Button>
 
-                    <Button onClick={initPaidCashier} style={{ width: '100%' }} variant="solid" color="blue">Bayar di Kasir</Button>
+                    <Button onClick={initPaidCashier} style={{ width: '100%' }} variant="solid" color="blue">PEMBAYARAN DI KASIR</Button>
                 </div>
             </div>
         ) :

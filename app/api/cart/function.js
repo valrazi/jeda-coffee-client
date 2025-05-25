@@ -188,6 +188,15 @@ export async function checkoutCart(cart_id, table_number, transfer_proof, paid_a
                 price: item.price,
                 total_price: item.total_price
             });
+
+            const product = await Product.findOne({
+                where: {
+                    id: item.product_id
+                }
+            })
+
+            product.stock = product.stock - item.quantity
+            await product.save()
         }
         cart.checkout_at = new Date()
         await cart.save()
