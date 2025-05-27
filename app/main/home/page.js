@@ -12,7 +12,8 @@ import Link from "next/link"
 import Swal from "sweetalert2"
 import { signOut } from "next-auth/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faLocationDot, faMinus, faMugHot, faQuoteLeft, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faLocationDot, faMinus, faMugHot, faPhone, faQuoteLeft, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons'
 const { OptGroup } = Select
 export default function MainPage() {
     const dashboardUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL
@@ -102,6 +103,26 @@ export default function MainPage() {
                                         <span>Weekend 11:00 - 00:00</span>
                                     </h1>
                                 </div>
+                                <div className='flex gap-4'>
+                                    <a href='https://www.tiktok.com/@jedakopi'>
+                                        <h1 className='text-white font-extralight flex gap-2 items-center text-xs mt-1'>
+                                            <FontAwesomeIcon icon={faTiktok} />
+                                            <span>@jedakopi</span>
+                                        </h1>
+                                    </a>
+
+                                    <a href='https://www.instagram.com/jedakopi__'>
+                                        <h1 className='text-white font-extralight flex gap-2 items-center text-xs mt-1'>
+                                            <FontAwesomeIcon icon={faInstagram} />
+                                            <span>@jedakopi__</span>
+                                        </h1>
+                                    </a>
+
+                                </div>
+                                <h1 className='text-white font-extralight flex gap-2 items-center text-xs mt-1'>
+                                    <FontAwesomeIcon icon={faPhone} />
+                                    <span>0812-1161-3025</span>
+                                </h1>
                                 <button onClick={navigateToMenu} className='bg-white px-4 py-1 rounded-lg hover:bg-white/70 hover:cursor-pointer flex gap-2 items-center'>
                                     <FontAwesomeIcon icon={faMugHot} />
                                     <span>Menu</span>

@@ -55,7 +55,7 @@ export async function DELETE(req) {
         const data = await Favorite.findOne({
             where: {
                 customer_id: session.user.id,
-                product_id: parseInt(productId)
+                product_id: productId
             }
         })
         if(!data) return NextResponse.json({error: 'Product not found'}, {status: 404})
