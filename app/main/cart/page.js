@@ -88,8 +88,16 @@ export default function CartPage({ }) {
 
                 <div className="w-full border border-gray-300 mt-4 mb-4  z-[999]  rounded-xl py-1 px-4 text-black">
                     <div className="w-full flex justify-between mb-2 items-center text">
-                        <h1 className="text-sm  font-bold">Total Price</h1>
+                        <h1 className="text-sm  font-bold">Product Price</h1>
                         <h2 className="text-sm  font-bold">{formatRupiah(cart.total_price)}</h2>
+                    </div>
+                    <div className="w-full flex justify-between mb-2 items-center text">
+                        <h1 className="text-sm  font-bold">Tax 11%</h1>
+                        <h2 className="text-sm  font-bold">{formatRupiah(cart.total_price * 0.11)}</h2>
+                    </div>
+                    <div className="w-full flex justify-between mb-2 items-center text">
+                        <h1 className="text-sm  font-bold">Total Price</h1>
+                        <h2 className="text-sm  font-bold">{formatRupiah((cart.total_price * 0.11) + cart.total_price)}</h2>
                     </div>
                 </div>
 

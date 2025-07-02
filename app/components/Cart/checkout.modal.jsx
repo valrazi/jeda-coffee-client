@@ -112,7 +112,7 @@ export default function CheckoutModal({ showModal, setShowModal, finishCheckout,
                             <div className="w-full flex flex-col justify-center items-center">
                                 <img src="/bca.png" className="w-1/2" alt="" />
                                 <h1 className="text-lg font-bold mt-2">88728939028 a/n Jeda Kopi</h1>
-                                <h1 className="text-lg font-bold">Total: {formatRupiah(+cart.total_price)}</h1>
+                                <h1 className="text-lg font-bold">Total: {formatRupiah((+cart.total_price * 0.11) + +cart.total_price)}</h1>
                             </div>
                         </div>
                     )

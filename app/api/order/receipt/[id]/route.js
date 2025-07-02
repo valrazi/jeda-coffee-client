@@ -6,7 +6,7 @@ import Customer from '../../../../../models/customer'
 
 export async function GET(request, { params }) {
     const {id} = await params
-    const order = await Orders.findOne({
+    let order = await Orders.findOne({
         where: { id: id },
         include: [
             {
@@ -18,6 +18,11 @@ export async function GET(request, { params }) {
             }
         ]
     })
+
+    order = order.toJSON()
+    order.tax_price = order.total_price * 0.11
+
+    
 
     if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 })
 

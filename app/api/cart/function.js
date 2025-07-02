@@ -153,7 +153,7 @@ export async function checkoutCart(cart_id, table_number, transfer_proof, paid_a
         const order = await Orders.create({
             id: formattedId,
             customer_id: cart.customer_id,
-            total_price: cart.total_price,
+            total_price: cart.total_price + (cart.total_price * 0.11),
             payment_status: 'pending',
             order_status: 'pending',
             payment_method: 'card',

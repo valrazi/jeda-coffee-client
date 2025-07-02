@@ -101,7 +101,7 @@ export default function DetailProduct({ params }) {
                 <div className="w-full flex justify-between items-center mt-2">
                     <div>
                         <h2 className="text-xs text-gray-400">Total Price</h2>
-                        <h1 className="font-bold">{formatRupiah(+product.price * quantity)}</h1>
+                        <h1 className="font-bold">{formatRupiah(+product.price * quantity)} <br></br><span className="font-medium text-xs text-black">(exc tax)</span></h1>
                     </div>
                     <div className="flex gap-2 justify-center items-center my-2">
                         <Button icon={product.favorites && product.favorites.length ? <HeartFilled/> : <HeartOutlined/>} onClick={() => toggleFavorite()}/>

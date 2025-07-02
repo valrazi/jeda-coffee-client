@@ -24,6 +24,16 @@ export async function createReceiptPDF(order) {
         { type: 'empty' },
         {
             type: 'properties', lines: [
+                { name: 'Product Price', value: 'Rp.' + Number(order.total_price - (order.total_price * 0.11)).toLocaleString('id-ID') }
+            ]
+        },
+        {
+            type: 'properties', lines: [
+                { name: 'Tax Price 11%', value: 'Rp.' + Number(order.total_price * 0.11).toLocaleString('id-ID') }
+            ]
+        },
+        {
+            type: 'properties', lines: [
                 { name: 'Total Price', value: 'Rp.' + Number(order.total_price).toLocaleString('id-ID') }
             ]
         },
